@@ -78,7 +78,7 @@ export const store = new Vuex.Store({
                   curs: curInfo[index],
                 })
               })
-              if (dateSpan === 'years') dataCollection.datasets[0].pointRadius = 0
+              if (dateSpan === 'years' || dateSpan === 'quarter') dataCollection.datasets[0].pointRadius = 0
               context.commit('setTableData', tableData)
               context.commit('setDataCollection', dataCollection)
             }

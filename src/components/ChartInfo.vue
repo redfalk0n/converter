@@ -2,20 +2,21 @@
     <md-content>
         <md-field v-if="currencies" class="currencySelectorField">
             <label for="currencySelector">{{currentCurrency ? currentCurrency.CharCode[0] : 'Выберите валюту'}}</label>
-            <md-select id="currencySelector" v-model="selected">
+            <md-select id="currencySelector" v-model="selected" md-dense>
                 <div v-for="currency in currencies" v-bind:key="currency.$.ID" @click="() => changeCurrency(currency)">
                     <md-option>
-                        {{currency.CharCode[0]}}: {{currency.processedValue}}
+                        {{currency.CharCode[0]}} ({{currency.Name[0]}})
                     </md-option>
                 </div>
             </md-select>
         </md-field>
         <div style="display: flex">
             <div v-if="dataCollection" class="chart">
-                <line-chart :chart-data="dataCollection"></line-chart>
-                <button @click="$store.dispatch('chartDataRequest', 'weeks')">wek</button>
-                <button @click="$store.dispatch('chartDataRequest', 'months')">month</button>
-                <button @click="$store.dispatch('chartDataRequest', 'years')">yer</button>
+                <line-chart :chart-data="dataCollection" :options="options"></line-chart>
+                <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'weeks')">Неделя</md-button>
+                <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'months')">Месяц</md-button>
+                <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'quarter')">Квартал</md-button>
+                <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'years')">Год</md-button>
             </div>
         </div>
     </md-content>
@@ -56,11 +57,28 @@
       },
       dataCollection() {
         return this.$store.state.dataCollection
+      },
+      options() {
+        return {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: true,
+              text: this.$store.state.dataCollection.datasets[0].label
+          }
+        }
       }
     }
   }
 </script>
 
 <style scoped>
-
+    .md-menu-content-container {
+        height: 230px;
+        min-width: fit-content;
+    }
+    .md-accent {
+        background-color: #ef472b
+    }
 </style>

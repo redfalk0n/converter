@@ -1,14 +1,31 @@
 <template>
     <div class="app">
-        <md-toolbar>
+        <md-toolbar class="app-title">
             <h2 class="thumb">Конвертер валют</h2>
         </md-toolbar>
-        <div style="display: flex">
-            <ChartInfo/>
-            <DiffTable/>
-            <Converter/>
-        </div>
-        <md-progress-spinner v-if="loader" class="md-accent" md-mode="indeterminate"></md-progress-spinner>
+        <md-content class="main-container">
+            <span class="md-display-1 chart-description" v-if="currentCurrency">Динамика курса{{
+                    Number(currentCurrency.Nominal[0]) > 1
+                    ? ` ${currentCurrency.Name[0].toLocaleLowerCase()}`
+                    : `: ${currentCurrency.Name[0].toLocaleLowerCase()}`}} к рублю
+            </span>
+            <md-divider/>
+            <div class="flex-div">
+                <div>
+                    <div class="converter-container">
+                        <span class="md-subheading">Конвертер валют по курсу Банка России</span>
+                        <Converter/>
+                    </div>
+                    <md-divider/>
+                    <div class="table-container">
+                        <span class="md-subheading">Таблица изменений курса</span>
+                        <DiffTable/>
+                    </div>
+                </div>
+                <ChartInfo class="chart-container"/>
+            </div>
+        </md-content>
+        <md-progress-spinner v-if="loader" class="md-accent spinner" md-mode="indeterminate"></md-progress-spinner>
     </div>
 </template>
 
@@ -67,7 +84,6 @@
                 this.setCurrencies(data)
                 this.setCurrentCurrency(data[0])
                 this.$store.dispatch('chartDataRequest')
-                console.log('DATA', data)
               }
             })
             this.hideLoader()
@@ -81,9 +97,44 @@
     computed: {
       loader() {
         return this.$store.state.loader
-      }
+      },
+      currentCurrency() {
+        return this.$store.state.currentCurrency
+      },
     }
   }
 </script>
 <style>
+    .flex-div {
+        display: flex;
+    }
+    .app {
+        background: white;
+    }
+    .app-title {
+        justify-content: center;
+    }
+    .main-container {
+        width: 53%;
+        margin: 0 auto;
+    }
+    .chart-description {
+        font-size: 22px;
+    }
+    .converter-container {
+        width: 315px;
+        margin: 20px 0;
+    }
+    .table-container {
+        width: 365px;
+        margin: 20px 0;
+    }
+    .chart-container {
+        margin-left: 40px;
+    }
+    .spinner {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+    }
 </style>

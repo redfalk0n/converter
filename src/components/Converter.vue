@@ -5,10 +5,10 @@
                 <div style="display: flex">
                     <md-field>
                         <label for="firstSelector">{{firstCurrency ? firstCurrency.CharCode[0] : 'Выберите валюту'}}</label>
-                        <md-select id="firstSelector" v-model="firstCurrency">
+                        <md-select id="firstSelector" class="currSelector" v-model="selected" md-dense>
                             <div v-for="currency in currencies" v-bind:key="currency.$.ID" @click="() => setFirstCurrency(currency)">
                                 <md-option>
-                                    {{currency.CharCode[0]}}: {{currency.processedValue}}
+                                    {{currency.CharCode[0]}} ({{currency.Name[0]}})
                                 </md-option>
                             </div>
                         </md-select>
@@ -22,10 +22,10 @@
                 <div style="display: flex">
                     <md-field>
                         <label for="secondSelector">{{secondCurrency ? secondCurrency.CharCode[0] : 'Выберите валюту'}}</label>
-                        <md-select id="secondSelector" v-model="secondCurrency">
+                        <md-select id="secondSelector" v-model="selected" class="currSelector" md-dense>
                             <div v-for="currency in currencies" v-bind:key="currency.$.ID" @click="() => setSecondCurrency(currency)">
                                 <md-option>
-                                    {{currency.CharCode[0]}}: {{currency.processedValue}}
+                                    {{currency.CharCode[0]}} ({{currency.Name[0]}})
                                 </md-option>
                             </div>
                         </md-select>
@@ -45,6 +45,7 @@
     name: 'Converter',
     data: () => {
       return {
+        selected: null,
         firstCurrency: null,
         firstInput: 100,
         secondCurrency: null,
@@ -54,14 +55,17 @@
     methods: {
       setFirstCurrency: function(curr) {
         this.firstCurrency = curr
+        this.calculate()
       },
       setSecondCurrency: function(curr) {
         this.secondCurrency = curr
         this.calculate()
       },
       calculate: function() {
-        this.secondInput = ((Number(this.firstCurrency.processedValue) * Number(this.firstInput))
-          / Number(this.secondCurrency.processedValue)).toFixed(4)
+        if(this.firstCurrency && this.firstInput && this.secondCurrency) {
+          this.secondInput = parseFloat(((Number(this.firstCurrency.processedValue) * Number(this.firstInput))
+            / Number(this.secondCurrency.processedValue)).toPrecision(4))
+        }
       },
       swap: function() {
         let temp = this.firstCurrency
@@ -74,7 +78,15 @@
     },
     computed: {
       currencies() {
-        return this.$store.state.currencies
+        const rub = {
+          CharCode: ['RUB'],
+          Name: ['Российский рубль'],
+          $: [{ID: 'R91010'}],
+          processedValue: '1',
+        }
+        const newCurrencies = [...this.$store.state.currencies]
+        newCurrencies.unshift(rub)
+        return newCurrencies
       },
     }
   }
@@ -82,5 +94,12 @@
 <style>
     .swapBtn {
         cursor: pointer;
+    }
+    .md-menu-content-container {
+        height: 230px;
+        min-width: fit-content;
+    }
+    .currSelector {
+        width: 170px;
     }
 </style>
