@@ -1,1 +1,1 @@
-export const PROXY = ''
+export const PROXY = 'https://yacdn.org/proxy/'

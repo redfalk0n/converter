@@ -22,6 +22,7 @@ export const store = new Vuex.Store({
     currentCurrency: null,
     tableData: [],
     newsData: null,
+    dialogInfo: null,
   },
   mutations: {
     setCurrencies(state, value) {
@@ -38,6 +39,9 @@ export const store = new Vuex.Store({
     },
     setNewsData(state, value) {
       state.newsData = value
+    },
+    setDialogInfo(state, value) {
+      state.dialogInfo = value
     },
     showLoader(state) {
       state.loader = true
@@ -90,6 +94,13 @@ export const store = new Vuex.Store({
           context.commit('hideLoader')
         })
         .catch((err) => {
+          context.commit('setDialogInfo', {
+            title: 'Ошибка',
+            description: 'Ошибка запроса данных Банка России. Повторить попытку?',
+            show: true,
+            source: 'chartDataRequest',
+            datespan: dateSpan,
+          })
           context.commit('hideLoader')
           console.log(err)
         })

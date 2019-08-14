@@ -1,5 +1,15 @@
 <template>
     <div class="app">
+        <md-dialog-confirm
+                v-if="dialogInfo"
+                :md-active.sync="dialogInfo.show"
+                :md-title="dialogInfo.title"
+                :md-content="dialogInfo.description"
+                md-confirm-text="Да"
+                md-cancel-text="Нет"
+                @md-confirm="onConfirm"
+        >
+        </md-dialog-confirm>
         <md-toolbar class="app-title">
             <h2 class="thumb">Конвертер валют</h2>
         </md-toolbar>
@@ -57,6 +67,7 @@
         'setCurrencies',
         'setDataCollection',
         'setCurrentCurrency',
+        'setDialogInfo',
       ]),
       currenciesRequest: function () {
         this.showLoader()
@@ -88,9 +99,22 @@
             this.hideLoader()
           })
           .catch((err) => {
+            this.setDialogInfo({
+              title: 'Ошибка',
+              description: 'Ошибка запроса данных Банка России. Повторить попытку?',
+              show: true,
+              source: 'currenciesRequest'
+            })
             this.hideLoader()
             console.log(err)
           })
+      },
+      onConfirm: function() {
+        if(this.dialogInfo.source === 'currenciesRequest') {
+          this.currenciesRequest()
+        } else if(this.dialogInfo.source === 'chartDataRequest') {
+          this.$store.dispatch('chartDataRequest', this.dialogInfo.datespan)
+        }
       },
     },
     computed: {
@@ -100,6 +124,9 @@
       currentCurrency() {
         return this.$store.state.currentCurrency
       },
+      dialogInfo() {
+        return this.$store.state.dialogInfo
+      }
     }
   }
 </script>
@@ -139,27 +166,40 @@
         right: 20px;
         bottom: 20px;
     }
-   /* @media screen and (max-width: 1500px){
-        .main-container {
-            width: 70%;
-        }
-    }
-    @media screen and (max-width: 1100px) {
+    @media screen and (max-width: 1500px){
         .main-container {
             width: 90%;
         }
     }
-    @media screen and (max-width: 850px) {
+    @media screen and (max-width: 1200px) {
+        .main-container {
+            width: 95%;
+        }
+    }
+    @media screen and (max-width: 1100px) {
         .flex-div {
-            display: grid;
+            flex-direction: column-reverse;
+            align-items: center;
         }
         .chart-container {
             margin-left: 0;
+        }
+    }
+    @media screen and (max-width: 740px) {
+        .main-container{
+            width: 100%;
+        }
+        .info-container{
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+        .flex-div{
+            border: none;
         }
     }
     @media screen and (max-width: 570px) {
         .chart-description {
             font-size: 16px;
         }
-    }*/
+    }
 </style>
