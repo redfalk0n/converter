@@ -1,10 +1,10 @@
 <template>
     <div>
         <div style="display: flex">
-            <md-content>
+            <md-content class="selectors-container">
                 <div style="display: flex">
                     <md-field>
-                        <label for="firstSelector">{{firstCurrency ? firstCurrency.CharCode[0] : 'Выберите валюту'}}</label>
+                        <label for="firstSelector" class="select-label">{{firstCurrency ? firstCurrency.CharCode[0] : 'Валюта'}}</label>
                         <md-select id="firstSelector" class="currSelector" v-model="selected" md-dense>
                             <div v-for="currency in currencies" v-bind:key="currency.$.ID" @click="() => setFirstCurrency(currency)">
                                 <md-option>
@@ -21,7 +21,7 @@
                 <i class="material-icons swapBtn" @click="swap">swap_vert</i>
                 <div style="display: flex">
                     <md-field>
-                        <label for="secondSelector">{{secondCurrency ? secondCurrency.CharCode[0] : 'Выберите валюту'}}</label>
+                        <label for="secondSelector" class="select-label">{{secondCurrency ? secondCurrency.CharCode[0] : 'Валюта'}}</label>
                         <md-select id="secondSelector" v-model="selected" class="currSelector" md-dense>
                             <div v-for="currency in currencies" v-bind:key="currency.$.ID" @click="() => setSecondCurrency(currency)">
                                 <md-option>
@@ -100,6 +100,9 @@
         min-width: fit-content;
     }
     .currSelector {
-        width: 170px;
+        width: 90px;
+    }
+    .selectors-container{
+        width: 200px;
     }
 </style>

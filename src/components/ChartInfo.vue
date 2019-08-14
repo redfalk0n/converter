@@ -13,10 +13,12 @@
         <div style="display: flex">
             <div v-if="dataCollection" class="chart">
                 <line-chart :chart-data="dataCollection" :options="options"></line-chart>
-                <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'weeks')">Неделя</md-button>
-                <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'months')">Месяц</md-button>
-                <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'quarter')">Квартал</md-button>
-                <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'years')">Год</md-button>
+                <div class="button-container">
+                    <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'weeks')">Неделя</md-button>
+                    <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'months')">Месяц</md-button>
+                    <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'quarter')">Квартал</md-button>
+                    <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'years')">Год</md-button>
+                </div>
             </div>
         </div>
     </md-content>
@@ -78,7 +80,14 @@
         height: 230px;
         min-width: fit-content;
     }
-    .md-accent {
-        background-color: #ef472b
+    .md-button.md-theme-default.md-raised:not([disabled]).md-accent{
+        background-color: #ef472b;
+        min-width: 65px;
+        font-size: 12px;
+        height: 30px;
+    }
+    .button-container{
+        display: flex;
+        justify-content: center;
     }
 </style>

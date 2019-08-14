@@ -10,19 +10,18 @@
                     : `: ${currentCurrency.Name[0].toLocaleLowerCase()}`}} к рублю
             </span>
             <md-divider/>
-            <div class="flex-div">
-                <div>
-                    <div class="converter-container">
-                        <span class="md-subheading">Конвертер валют по курсу Банка России</span>
-                        <Converter/>
-                    </div>
-                    <md-divider/>
+            <div class="info-container">
+                <div class="flex-div">
                     <div class="table-container">
                         <span class="md-subheading">Таблица изменений курса</span>
                         <DiffTable/>
                     </div>
+                    <ChartInfo class="chart-container"/>
                 </div>
-                <ChartInfo class="chart-container"/>
+                <div class="converter-container">
+                    <span class="md-subheading">Конвертация по курсу Банка России</span>
+                    <Converter/>
+                </div>
             </div>
         </md-content>
         <md-progress-spinner v-if="loader" class="md-accent spinner" md-mode="indeterminate"></md-progress-spinner>
@@ -105,36 +104,62 @@
   }
 </script>
 <style>
+    .info-container {
+        display: flex;
+        justify-content: center;
+    }
     .flex-div {
         display: flex;
-    }
-    .app {
-        background: white;
+        border-right: 2px solid #f6f6f6;
     }
     .app-title {
         justify-content: center;
     }
     .main-container {
-        width: 53%;
+        width: 75%;
         margin: 0 auto;
+        padding: 15px;
     }
     .chart-description {
         font-size: 22px;
     }
     .converter-container {
         width: 315px;
-        margin: 20px 0;
+        margin: 20px 0 0 20px;
     }
     .table-container {
         width: 365px;
-        margin: 20px 0;
+        margin-top: 20px;
     }
     .chart-container {
-        margin-left: 40px;
+        margin-left: 20px;
     }
     .spinner {
         position: fixed;
         right: 20px;
         bottom: 20px;
     }
+   /* @media screen and (max-width: 1500px){
+        .main-container {
+            width: 70%;
+        }
+    }
+    @media screen and (max-width: 1100px) {
+        .main-container {
+            width: 90%;
+        }
+    }
+    @media screen and (max-width: 850px) {
+        .flex-div {
+            display: grid;
+        }
+        .chart-container {
+            margin-left: 0;
+        }
+    }
+    @media screen and (max-width: 570px) {
+        .chart-description {
+            font-size: 16px;
+        }
+    }*/
 </style>

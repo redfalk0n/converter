@@ -21,6 +21,7 @@ export const store = new Vuex.Store({
     dataCollection: null,
     currentCurrency: null,
     tableData: [],
+    newsData: null,
   },
   mutations: {
     setCurrencies(state, value) {
@@ -34,6 +35,9 @@ export const store = new Vuex.Store({
     },
     setTableData(state, value) {
       state.tableData = value
+    },
+    setNewsData(state, value) {
+      state.newsData = value
     },
     showLoader(state) {
       state.loader = true
