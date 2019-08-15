@@ -23,6 +23,7 @@ export const store = new Vuex.Store({
     tableData: [],
     newsData: null,
     dialogInfo: null,
+    dateRange: 'неделю'
   },
   mutations: {
     setCurrencies(state, value) {
@@ -42,6 +43,9 @@ export const store = new Vuex.Store({
     },
     setDialogInfo(state, value) {
       state.dialogInfo = value
+    },
+    setDateRange(state, value){
+      state.dateRange = value
     },
     showLoader(state) {
       state.loader = true
@@ -86,6 +90,15 @@ export const store = new Vuex.Store({
                   curs: curInfo[index],
                 })
               })
+              switch (dateSpan) {
+                case 'months': context.commit('setDateRange', 'месяц')
+                  break
+                case 'quarter': context.commit('setDateRange', 'квартал')
+                  break
+                case 'years': context.commit('setDateRange', 'год')
+                  break
+                default: context.commit('setDateRange', 'неделю')
+              }
               if (dateSpan === 'years' || dateSpan === 'quarter') dataCollection.datasets[0].pointRadius = 0
               context.commit('setTableData', tableData)
               context.commit('setDataCollection', dataCollection)

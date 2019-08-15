@@ -68,7 +68,10 @@
           title: {
             display: true,
               text: this.$store.state.dataCollection.datasets[0].label
-          }
+          },
+          animation: {
+            duration: 0,
+          },
         }
       }
     }

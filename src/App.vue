@@ -17,7 +17,7 @@
             <span class="md-display-1 chart-description" v-if="currentCurrency">Динамика курса{{
                     Number(currentCurrency.Nominal[0]) > 1
                     ? ` ${currentCurrency.Name[0].toLocaleLowerCase()}`
-                    : `: ${currentCurrency.Name[0].toLocaleLowerCase()}`}} к рублю
+                    : `: ${currentCurrency.Name[0].toLocaleLowerCase()}`}} к рублю за {{dateRange}}
             </span>
             <md-divider/>
             <div class="info-container">
@@ -92,7 +92,7 @@
                   }
                 })
                 this.setCurrencies(data)
-                this.setCurrentCurrency(data[0])
+                this.setCurrentCurrency(data[10])
                 this.$store.dispatch('chartDataRequest')
               }
             })
@@ -126,6 +126,9 @@
       },
       dialogInfo() {
         return this.$store.state.dialogInfo
+      },
+      dateRange() {
+        return this.$store.state.dateRange
       }
     }
   }
