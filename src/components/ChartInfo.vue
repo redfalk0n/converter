@@ -14,10 +14,17 @@
             <div v-if="dataCollection" class="chart">
                 <line-chart :chart-data="dataCollection" :options="options"></line-chart>
                 <div class="button-container">
-                    <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'weeks')">Неделя</md-button>
-                    <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'months')">Месяц</md-button>
-                    <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'quarter')">Квартал</md-button>
-                    <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'years')">Год</md-button>
+                    <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'weeks')">
+                        Неделя
+                    </md-button>
+                    <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'months')">
+                        Месяц
+                    </md-button>
+                    <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'quarter')">
+                        Квартал
+                    </md-button>
+                    <md-button class="md-accent md-raised" @click="$store.dispatch('chartDataRequest', 'years')">Год
+                    </md-button>
                 </div>
             </div>
         </div>
@@ -44,7 +51,7 @@
       ...mapMutations([
         'setCurrentCurrency',
       ]),
-      changeCurrency: function(curr) {
+      changeCurrency: function (curr) {
         this.setCurrentCurrency(curr)
         console.log(curr)
         this.$store.dispatch('chartDataRequest')
@@ -67,7 +74,7 @@
           },
           title: {
             display: true,
-              text: this.$store.state.dataCollection.datasets[0].label
+            text: this.$store.state.dataCollection.datasets[0].label
           },
           animation: {
             duration: 0,
@@ -83,13 +90,15 @@
         height: 230px;
         min-width: fit-content;
     }
-    .md-button.md-theme-default.md-raised:not([disabled]).md-accent{
+
+    .md-button.md-theme-default.md-raised:not([disabled]).md-accent {
         background-color: #ef472b;
         min-width: 65px;
         font-size: 12px;
         height: 30px;
     }
-    .button-container{
+
+    .button-container {
         display: flex;
         justify-content: center;
     }

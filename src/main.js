@@ -44,7 +44,7 @@ export const store = new Vuex.Store({
     setDialogInfo(state, value) {
       state.dialogInfo = value
     },
-    setDateRange(state, value){
+    setDateRange(state, value) {
       state.dateRange = value
     },
     showLoader(state) {
@@ -55,11 +55,13 @@ export const store = new Vuex.Store({
     },
   },
   actions: {
-    chartDataRequest(context, dateSpan = 'weeks'){
+    chartDataRequest(context, dateSpan = 'weeks') {
       context.commit('showLoader')
       const reqOptions = {
         method: 'get',
-        url: `${PROXY}http://www.cbr.ru/scripts/XML_dynamic.asp?date_req1=${moment(new Date()).subtract(dateSpan, 1).format('DD/MM/YYYY')}&date_req2=${moment(new Date()).format('DD/MM/YYYY')}&VAL_NM_RQ=${context.state.currentCurrency.$.ID}`,
+        url: `${PROXY}http://www.cbr.ru/scripts/XML_dynamic.asp?date_req1=${
+          moment(new Date()).subtract(dateSpan, 1).format('DD/MM/YYYY')
+        }&date_req2=${moment(new Date()).format('DD/MM/YYYY')}&VAL_NM_RQ=${context.state.currentCurrency.$.ID}`,
         headers: {
           'Content-Type': 'application/xml',
         },
@@ -67,7 +69,7 @@ export const store = new Vuex.Store({
       axios(reqOptions)
         .then((resp) => {
           xml2js.parseString(resp.data, (err, res) => {
-            if (err) {
+            if(err) {
               console.log('ERROR: ', err)
             } else {
               const dataCollection = {
@@ -76,7 +78,7 @@ export const store = new Vuex.Store({
                   {
                     label: context.state.currentCurrency.Name[0],
                     backgroundColor: 'red',
-                    data: res.ValCurs.Record.map(item => (parseFloat(item.Value[0].replace(',', '.'))/
+                    data: res.ValCurs.Record.map(item => (parseFloat(item.Value[0].replace(',', '.')) /
                       parseFloat(item.Nominal[0].replace(',', '.'))).toPrecision(4))
                   }
                 ]
@@ -91,15 +93,19 @@ export const store = new Vuex.Store({
                 })
               })
               switch (dateSpan) {
-                case 'months': context.commit('setDateRange', 'месяц')
+                case 'months':
+                  context.commit('setDateRange', 'месяц')
                   break
-                case 'quarter': context.commit('setDateRange', 'квартал')
+                case 'quarter':
+                  context.commit('setDateRange', 'квартал')
                   break
-                case 'years': context.commit('setDateRange', 'год')
+                case 'years':
+                  context.commit('setDateRange', 'год')
                   break
-                default: context.commit('setDateRange', 'неделю')
+                default:
+                  context.commit('setDateRange', 'неделю')
               }
-              if (dateSpan === 'years' || dateSpan === 'quarter') dataCollection.datasets[0].pointRadius = 0
+              if(dateSpan === 'years' || dateSpan === 'quarter') dataCollection.datasets[0].pointRadius = 0
               context.commit('setTableData', tableData)
               context.commit('setDataCollection', dataCollection)
             }

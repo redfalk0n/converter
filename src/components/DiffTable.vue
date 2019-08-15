@@ -39,17 +39,21 @@
     .md-list-item-text {
         cursor: pointer;
     }
+
     .material-icons {
         align-self: center;
     }
+
     .plusCost {
         display: flex;
         color: green;
     }
+
     .minusCost {
         display: flex;
         color: red;
     }
+
     .curChanges {
         max-height: 500px;
         overflow: auto;

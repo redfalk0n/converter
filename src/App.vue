@@ -81,13 +81,13 @@
         axios(reqOptions)
           .then((resp) => {
             xml2js.parseString(resp.data, (err, res) => {
-              if (err) {
+              if(err) {
                 console.log('ERROR: ', err)
               } else {
                 const data = res.ValCurs.Valute.map((item) => {
                   return {
                     ...item,
-                    processedValue: (parseFloat(item.Value[0].replace(',', '.'))/
+                    processedValue: (parseFloat(item.Value[0].replace(',', '.')) /
                       parseFloat(item.Nominal[0].replace(',', '.'))).toPrecision(4)
                   }
                 })
@@ -109,7 +109,7 @@
             console.log(err)
           })
       },
-      onConfirm: function() {
+      onConfirm: function () {
         if(this.dialogInfo.source === 'currenciesRequest') {
           this.currenciesRequest()
         } else if(this.dialogInfo.source === 'chartDataRequest') {
@@ -138,77 +138,95 @@
         display: flex;
         justify-content: center;
     }
+
     .flex-div {
         display: flex;
         border-right: 2px solid #f6f6f6;
     }
+
     .app-title {
         justify-content: center;
     }
+
     .main-container {
         width: 75%;
         margin: 0 auto;
         padding: 15px;
     }
+
     .chart-description {
         font-size: 22px;
     }
+
     .converter-container {
         width: 315px;
         margin: 20px 0 0 20px;
     }
+
     .table-container {
         width: 365px;
         margin-top: 20px;
     }
+
     .chart-container {
         margin-left: 20px;
     }
+
     .spinner {
         position: fixed;
         right: 20px;
         bottom: 20px;
     }
-    @media screen and (max-width: 1500px){
+
+    @media screen and (max-width: 1500px) {
         .main-container {
             width: 90%;
         }
     }
+
     @media screen and (max-width: 1200px) {
         .main-container {
             width: 95%;
         }
     }
+
     @media screen and (max-width: 1100px) {
         .flex-div {
             flex-direction: column-reverse;
             align-items: center;
         }
+
         .chart-container {
             margin-left: 0;
         }
     }
+
     @media screen and (max-width: 740px) {
-        .main-container{
+        .main-container {
             width: 100%;
         }
-        .info-container{
+
+        .info-container {
             flex-direction: column-reverse;
             align-items: center;
         }
-        .flex-div{
+
+        .flex-div {
             border: none;
         }
     }
+
     @media screen and (max-width: 570px) {
         .chart-description {
             font-size: 16px;
         }
     }
+
     @media screen and (max-width: 400px) {
         .converter-container {
             width: initial;
         }
+
         .table-container {
             width: initial;
         }

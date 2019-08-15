@@ -1,29 +1,23 @@
-# converter
+# Конвертер валют
 
-## Project setup
+## Установка проекта
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Сборка проекта для разработки  
+####(не минифицированная, со вспомогательными средствами)
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Сборка для развёртывания проекта
+####(минифицированная, без вспомогательных средств)
 ```
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
+### Проверка стиля кода и пунктуации
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
